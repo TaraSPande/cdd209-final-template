@@ -16,8 +16,8 @@ class PharmaDataset:
         if not filepath.exists():
             raise FileNotFoundError(f"File not found: {filepath}")
 
-        #TODO: Read in csv to a DataFrame
-        #TODO: Return a DataFrame
+        df = pd.read_csv(filepath)
+        return df
 
     def clean(self):
         self.df = clean_prescription_data(self.df)
@@ -30,7 +30,7 @@ class PharmaDataset:
         filepath = Path(filepath)
         filepath.parent.mkdir(parents=True, exist_ok=True)
         
-        #TODO: Save Dataframe to CSV
+        self.df.to_csv(filepath)
     
     def hist(self, column_name):
         if self.cleaned is False:
@@ -54,10 +54,11 @@ class PharmaDataset:
         if self.cleaned is False:
             raise ValueError("Run clean() first.")
         
-        #TODO: Filter self.df to only include entries with specific patient_id given
-        #      Name this new dataframe "patient_df" and update 2nd parameter in return statment
-        
-        return PatientAdherenceProfile(patient_id, self.df)
+        patient_df = self.df[
+            self.df["patient_id"] == patient_id
+        ]
+
+        return PatientAdherenceProfile(patient_id, patient_df)
     
     def get_df(self):
         return self.df

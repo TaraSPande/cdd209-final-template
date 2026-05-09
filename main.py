@@ -1,15 +1,17 @@
-#TODO: Import PharmaDataset class from data.py
+from src.pharma_adherence.data import PharmaDataset
 #TODO: Import ModelTrainer class from modeling.py
 
 """
 DAY 1: DATA PREPROCESSING & ANALYSIS
 """
 
-#TODO: Load in the dataset
+dataset = PharmaDataset("data/raw/prescriptions_large_raw.csv")
+print(dataset.df.head())
 
 #TODO: Clean the dataset
 
 #TODO: Save the dataset as a csv into "data/processed/"
+dataset.save("data/processed/prescriptions_large_cleaned.csv")
 
 #TODO: Visualize the cleaned data
 
